@@ -1,11 +1,2855 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Teste</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dilemas Digitais | Privacidade e Dados</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050608;
+    color:#f1f1f1;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+}
+
+/* =========================
+   PARTÍCULAS
+========================= */
+
+#particles{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-2;
+}
+
+/* =========================
+   FUNDO
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(180,185,195,.10),
+            transparent 38%
+        ),
+        linear-gradient(
+            rgba(5,6,8,.05),
+            rgba(5,6,8,.94)
+        );
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
+    position:fixed;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:min(1100px,calc(100% - 25px));
+    height:62px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    background:rgba(8,10,13,.82);
+    border:1px solid #292e35;
+    border-radius:17px;
+
+    backdrop-filter:blur(18px);
+
+    z-index:100;
+}
+
+.logo{
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#707780;
+}
+
+.navlinks{
+    display:flex;
+    gap:4px;
+}
+
+.navlinks a{
+    color:#9198a1;
+    text-decoration:none;
+
+    padding:9px 11px;
+    border-radius:8px;
+
+    font-size:13px;
+
+    transition:.2s;
+}
+
+.navlinks a:hover{
+    color:white;
+    background:#171a1e;
+}
+
+.menu{
+    display:none;
+    border:none;
+    background:none;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:120px 20px 80px;
+}
+
+.hero-content{
+    max-width:950px;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:8px 15px;
+
+    border:1px solid #30353c;
+    border-radius:50px;
+
+    color:#9aa1aa;
+    background:#0b0d10;
+
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.hero h1{
+    font-size:clamp(55px,9vw,110px);
+
+    line-height:.88;
+
+    letter-spacing:-6px;
+
+    margin:28px 0;
+}
+
+.hero h1 span{
+    color:#707780;
+}
+
+.hero p{
+    max-width:720px;
+
+    margin:auto;
+
+    color:#969da6;
+
+    font-size:17px;
+    line-height:1.8;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+
+    margin-top:32px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-block;
+
+    padding:13px 19px;
+
+    border-radius:10px;
+
+    border:1px solid #747a82;
+
+    background:#e8eaed;
+
+    color:#08090b;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn.dark{
+    background:#0d1014;
+    color:#d4d7db;
+    border-color:#343a42;
+}
+
+.scroll{
+    margin-top:60px;
+
+    color:#5f6770;
+
+    font-size:10px;
+    letter-spacing:3px;
+}
+
+/* =========================
+   SEÇÕES
+========================= */
+
+section{
+    padding:110px 20px;
+}
+
+.container{
+    width:min(1120px,100%);
+    margin:auto;
+}
+
+.label{
+    color:#707780;
+
+    font-size:11px;
+    letter-spacing:3px;
+
+    margin-bottom:10px;
+}
+
+h2{
+    font-size:clamp(38px,5vw,60px);
+
+    line-height:1;
+
+    letter-spacing:-3px;
+
+    margin-bottom:18px;
+}
+
+.lead{
+    color:#9299a3;
+
+    max-width:760px;
+
+    line-height:1.8;
+
+    margin-bottom:38px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+}
+
+.card{
+    position:relative;
+
+    padding:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111419,
+            #090c0f
+        );
+
+    border:1px solid #272d34;
+
+    border-radius:19px;
+
+    transition:.3s;
+
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+
+    border-color:#464d56;
+}
+
+.icon{
+    width:46px;
+    height:46px;
+
+    display:grid;
+    place-items:center;
+
+    margin-bottom:18px;
+
+    border:1px solid #363c44;
+
+    border-radius:12px;
+
+    background:#15181d;
+
+    color:#c5c9ce;
+
+    font-weight:bold;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#8e959e;
+
+    font-size:14px;
+
+    line-height:1.7;
+}
+
+/* =========================
+   FLUXO
+========================= */
+
+.flow{
+    display:grid;
+
+    grid-template-columns:
+        1fr 30px
+        1fr 30px
+        1fr 30px
+        1fr;
+
+    gap:8px;
+
+    align-items:center;
+}
+
+.flow-card{
+    min-height:160px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    text-align:center;
+}
+
+.number{
+    font-size:35px;
+
+    font-weight:bold;
+
+    color:#d7d9dc;
+}
+
+.arrow{
+    color:#555d66;
+
+    text-align:center;
+
+    font-size:23px;
+}
+
+/* =========================
+   DILEMA
+========================= */
+
+.dilemma{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+}
+
+.choice{
+    min-height:230px;
+
+    cursor:pointer;
+}
+
+.choice.selected{
+    border-color:#aaa;
+
+    box-shadow:
+        0 0 0 1px #777 inset;
+}
+
+.result{
+    display:none;
+
+    margin-top:15px;
+
+    padding:20px;
+
+    border:1px solid #30363d;
+
+    background:#0b0e11;
+
+    border-radius:14px;
+
+    color:#aeb4bc;
+}
+
+.result.show{
+    display:block;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.tabs{
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:14px;
+}
+
+.tab{
+    border:1px solid #2b3037;
+
+    background:#0c0f12;
+
+    color:#858c95;
+
+    padding:10px 14px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+}
+
+.tab.active{
+    color:white;
+
+    background:#171a1e;
+
+    border-color:#777e87;
+}
+
+.tabcontent{
+    display:none;
+}
+
+.tabcontent.active{
+    display:block;
+}
+
+/* =========================
+   DIREITOS
+========================= */
+
+.rights{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:12px;
+}
+
+.right{
+    padding:20px;
+
+    background:#0b0e11;
+
+    border:1px solid #282e35;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.right:hover{
+    transform:translateY(-3px);
+
+    border-color:#555c65;
+}
+
+.right strong{
+    display:block;
+
+    margin-bottom:6px;
+}
+
+.right small{
+    color:#737b84;
+}
+
+/* =========================
+   SIMULADOR
+========================= */
+
+.simulator{
+    max-width:850px;
+
+    margin:auto;
+
+    padding:25px;
+
+    background:#0b0e11;
+
+    border:1px solid #292f36;
+
+    border-radius:20px;
+}
+
+.setting{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:16px 0;
+
+    border-bottom:1px solid #20252b;
+}
+
+.setting small{
+    display:block;
+
+    color:#707780;
+
+    margin-top:3px;
+}
+
+.toggle{
+    width:52px;
+    height:29px;
+
+    padding:3px;
+
+    border-radius:50px;
+
+    background:#292e34;
+
+    cursor:pointer;
+}
+
+.knob{
+    width:23px;
+    height:23px;
+
+    border-radius:50%;
+
+    background:#777e87;
+
+    transition:.2s;
+}
+
+.toggle.on{
+    background:#777e87;
+}
+
+.toggle.on .knob{
+    transform:translateX(23px);
+
+    background:#eee;
+}
+
+.meter{
+    height:8px;
+
+    margin-top:25px;
+
+    background:#252a30;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+#meterFill{
+    height:100%;
+
+    width:50%;
+
+    background:#b8bdc4;
+
+    transition:.3s;
+}
+
+.metertext{
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#737b84;
+
+    font-size:12px;
+
+    margin-top:7px;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz{
+    max-width:850px;
+
+    margin:auto;
+
+    padding:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111419,
+            #090c0f
+        );
+
+    border:1px solid #292f36;
+
+    border-radius:20px;
+}
+
+.quiztop{
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    color:#777f89;
+
+    font-size:12px;
+}
+
+.progress{
+    flex:1;
+
+    height:4px;
+
+    background:#252a30;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+#quizprogress{
+    height:100%;
+
+    width:20%;
+
+    background:#bfc3c8;
+
+    transition:.3s;
+}
+
+.question{
+    font-size:21px;
+
+    font-weight:bold;
+
+    margin:28px 0 18px;
+}
+
+.answers{
+    display:grid;
+
+    gap:9px;
+}
+
+.answer{
+    width:100%;
+
+    text-align:left;
+
+    padding:14px;
+
+    border:1px solid #2d333a;
+
+    border-radius:10px;
+
+    background:#0c0f12;
+
+    color:#d0d4d8;
+
+    cursor:pointer;
+}
+
+.answer:hover{
+    border-color:#656c75;
+}
+
+.answer.correct{
+    border-color:#999fa6;
+
+    background:#191c20;
+}
+
+.answer.wrong{
+    border-color:#555b63;
+
+    background:#14171a;
+}
+
+.feedback{
+    color:#999fa8;
+
+    min-height:25px;
+
+    margin-top:14px;
+}
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.checklist{
+    max-width:850px;
+
+    display:grid;
+
+    gap:9px;
+}
+
+.check{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px;
+
+    background:#0b0e11;
+
+    border:1px solid #292f36;
+
+    border-radius:11px;
+
+    color:#aeb4bc;
+}
+
+.check input{
+    width:18px;
+    height:18px;
+}
+
+.checkprogress{
+    height:8px;
+
+    max-width:850px;
+
+    margin-top:18px;
+
+    background:#252a30;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+#checkfill{
+    width:0;
+
+    height:100%;
+
+    background:#bfc3c8;
+
+    transition:.3s;
+}
+
+/* =========================
+   FONTES
+========================= */
+
+.sources{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:50px 20px;
+
+    text-align:center;
+
+    border-top:1px solid #20252b;
+
+    color:#68707a;
+}
+
+footer strong{
+    color:#c0c4c9;
+
+    letter-spacing:2px;
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+.reveal{
+    opacity:0;
+
+    transform:translateY(25px);
+
+    transition:.7s;
+}
+
+.reveal.show{
+    opacity:1;
+
+    transform:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .navlinks{
+        display:none;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    nav.open .navlinks{
+        display:flex;
+
+        position:absolute;
+
+        top:70px;
+
+        left:0;
+        right:0;
+
+        flex-direction:column;
+
+        padding:10px;
+
+        background:#0b0e11;
+
+        border:1px solid #292f36;
+
+        border-radius:14px;
+    }
+
+    .grid,
+    .rights{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .flow{
+        grid-template-columns:1fr;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+
+@media(max-width:560px){
+
+    .grid,
+    .rights,
+    .dilemma,
+    .sources{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    section{
+        padding:80px 15px;
+    }
+}
+
+</style>
 </head>
+
 <body>
-    <h1>MEU SITE ESTÁ FUNCIONANDO</h1>
-    <p>GitHub Pages funcionando.....</p>
+
+<canvas id="particles"></canvas>
+
+<!-- =========================
+     NAV
+========================= -->
+
+<nav id="nav">
+
+    <div class="logo">
+        ◈ DILEMAS<span>DIGITAIS</span>
+    </div>
+
+    <div class="navlinks">
+
+        <a href="#dados">Dados</a>
+
+        <a href="#dilema">Dilema</a>
+
+        <a href="#lgpd">LGPD</a>
+
+        <a href="#quiz">Quiz</a>
+
+        <a href="#proteger">Proteção</a>
+
+    </div>
+
+    <button
+        class="menu"
+        onclick="document.getElementById('nav').classList.toggle('open')">
+
+        ☰
+
+    </button>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<header class="hero">
+
+<div class="hero-content">
+
+    <div class="badge">
+        PRIVACIDADE • DADOS • TECNOLOGIA
+    </div>
+
+    <h1>
+
+        SEUS DADOS.<br>
+
+        <span>SUAS ESCOLHAS.</span>
+
+    </h1>
+
+    <p>
+
+        Na internet, quase toda ação pode gerar informações.
+        Entenda como os dados são utilizados, quais são seus
+        direitos e como tomar decisões mais conscientes no
+        ambiente digital.
+
+    </p>
+
+    <div class="buttons">
+
+        <a href="#dados" class="btn">
+            Explorar o tema ↓
+        </a>
+
+        <a href="#quiz" class="btn dark">
+            Fazer o quiz
+        </a>
+
+    </div>
+
+    <div class="scroll">
+        ROLE PARA EXPLORAR
+    </div>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<!-- =========================
+     DADOS
+========================= -->
+
+<section id="dados" class="reveal">
+
+<div class="container">
+
+<div class="label">
+    01 — ENTENDA
+</div>
+
+<h2>
+    O que são dados pessoais?
+</h2>
+
+<p class="lead">
+
+    Dados pessoais são informações relacionadas a uma pessoa
+    identificada ou identificável. No ambiente digital, eles
+    aparecem em diversas situações do nosso cotidiano.
+
+</p>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+    <div class="icon">
+        01
+    </div>
+
+    <h3>
+        Identidade
+    </h3>
+
+    <p>
+        Nome, CPF, documentos e outras informações que podem
+        identificar uma pessoa.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="icon">
+        02
+    </div>
+
+    <h3>
+        Localização
+    </h3>
+
+    <p>
+        Informações capazes de indicar onde uma pessoa está
+        ou esteve.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="icon">
+        03
+    </div>
+
+    <h3>
+        Contato
+    </h3>
+
+    <p>
+        Telefone, e-mail e outras formas de comunicação.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="icon">
+        04
+    </div>
+
+    <h3>
+        Comportamento
+    </h3>
+
+    <p>
+        Pesquisas, compras, preferências e interações
+        realizadas em plataformas.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="icon">
+        05
+    </div>
+
+    <h3>
+        Biometria
+    </h3>
+
+    <p>
+        Impressão digital, reconhecimento facial e outras
+        características biométricas.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <div class="icon">
+        06
+    </div>
+
+    <h3>
+        Saúde
+    </h3>
+
+    <p>
+        Informações relacionadas à saúde possuem proteção
+        específica na LGPD.
+    </p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FLUXO
+========================= -->
+
+<section class="reveal">
+
+<div class="container">
+
+<div class="label">
+    02 — O CAMINHO DA INFORMAÇÃO
+</div>
+
+<h2>
+    Um clique pode iniciar várias etapas.
+</h2>
+
+<p class="lead">
+
+    Quando usamos um serviço digital, informações podem ser
+    fornecidas diretamente ou coletadas durante a utilização.
+
+</p>
+
+
+<div class="flow">
+
+
+<div class="card flow-card">
+
+    <div class="number">
+        01
+    </div>
+
+    <h3>
+        Você usa
+    </h3>
+
+    <p>
+        Site, aplicativo, jogo ou plataforma.
+    </p>
+
+</div>
+
+
+<div class="arrow">
+    →
+</div>
+
+
+<div class="card flow-card">
+
+    <div class="number">
+        02
+    </div>
+
+    <h3>
+        Dados entram
+    </h3>
+
+    <p>
+        Informações podem ser fornecidas ou coletadas.
+    </p>
+
+</div>
+
+
+<div class="arrow">
+    →
+</div>
+
+
+<div class="card flow-card">
+
+    <div class="number">
+        03
+    </div>
+
+    <h3>
+        Tratamento
+    </h3>
+
+    <p>
+        Os dados podem ser organizados e utilizados.
+    </p>
+
+</div>
+
+
+<div class="arrow">
+    →
+</div>
+
+
+<div class="card flow-card">
+
+    <div class="number">
+        04
+    </div>
+
+    <h3>
+        Finalidade
+    </h3>
+
+    <p>
+        O tratamento deve seguir uma finalidade e as regras aplicáveis.
+    </p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     DILEMA
+========================= -->
+
+<section id="dilema" class="reveal">
+
+<div class="container">
+
+<div class="label">
+    03 — DILEMA DIGITAL
+</div>
+
+<h2>
+    “É grátis.” Mas qual é o custo?
+</h2>
+
+<p class="lead">
+
+    Imagine que um aplicativo gratuito peça acesso a vários
+    dados. O que você faria?
+
+</p>
+
+
+<div class="dilemma">
+
+
+<div
+    class="card choice"
+    onclick="dilema('aceitar',this)"
+>
+
+    <div>
+
+        <div class="label">
+            OPÇÃO A
+        </div>
+
+        <div class="icon">
+            →
+        </div>
+
+        <h3>
+            Aceitar
+        </h3>
+
+        <p>
+
+            Continuar usando o serviço, verificando as
+            configurações e informações sobre o tratamento
+            dos dados.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<div
+    class="card choice"
+    onclick="dilema('recusar',this)"
+>
+
+    <div>
+
+        <div class="label">
+            OPÇÃO B
+        </div>
+
+        <div class="icon">
+            ×
+        </div>
+
+        <h3>
+            Recusar
+        </h3>
+
+        <p>
+
+            Não fornecer determinado acesso quando ele
+            não parecer necessário ou quando você não
+            quiser prosseguir.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div id="dilemaResult" class="result"></div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     LGPD
+========================= -->
+
+<section id="lgpd" class="reveal">
+
+<div class="container">
+
+<div class="label">
+    04 — CONHEÇA A LEI
+</div>
+
+<h2>
+    LGPD sem complicação.
+</h2>
+
+<p class="lead">
+
+    A Lei nº 13.709/2018 estabelece regras para o tratamento
+    de dados pessoais e busca proteger direitos fundamentais
+    relacionados à liberdade e à privacidade.
+
+</p>
+
+
+<div class="tabs">
+
+<button
+    class="tab active"
+    onclick="tab('titular',this)"
+>
+    Titular
+</button>
+
+<button
+    class="tab"
+    onclick="tab('controlador',this)"
+>
+    Controlador
+</button>
+
+<button
+    class="tab"
+    onclick="tab('operador',this)"
+>
+    Operador
+</button>
+
+<button
+    class="tab"
+    onclick="tab('consentimento',this)"
+>
+    Consentimento
+</button>
+
+</div>
+
+
+<div
+    id="titular"
+    class="tabcontent active card"
+>
+
+<h3>
+    Titular
+</h3>
+
+<p>
+
+É a pessoa natural a quem os dados pessoais se referem.
+A LGPD estabelece direitos para esse titular.
+
+</p>
+
+</div>
+
+
+<div
+    id="controlador"
+    class="tabcontent card"
+>
+
+<h3>
+    Controlador
+</h3>
+
+<p>
+
+É quem toma as principais decisões referentes ao
+tratamento de dados pessoais.
+
+</p>
+
+</div>
+
+
+<div
+    id="operador"
+    class="tabcontent card"
+>
+
+<h3>
+    Operador
+</h3>
+
+<p>
+
+É quem realiza o tratamento de dados pessoais em nome
+do controlador.
+
+</p>
+
+</div>
+
+
+<div
+    id="consentimento"
+    class="tabcontent card"
+>
+
+<h3>
+    Consentimento
+</h3>
+
+<p>
+
+É uma das bases legais possíveis para o tratamento de
+dados. Quando aplicável, deve estar relacionado a uma
+finalidade determinada e ser obtido de forma livre,
+informada e inequívoca.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     DIREITOS
+========================= -->
+
+<section class="reveal">
+
+<div class="container">
+
+<div class="label">
+    05 — SEUS DIREITOS
+</div>
+
+<h2>
+    Você não é apenas um usuário.
+</h2>
+
+<p class="lead">
+
+    A LGPD prevê diversos direitos para os titulares.
+    Clique nos cards para conhecer alguns.
+
+</p>
+
+
+<div class="rights">
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Acesso',
+        'O titular pode solicitar confirmação sobre a existência de tratamento e, em determinadas condições, acessar seus dados.'
+    )"
+>
+
+<strong>
+    🔎 Acesso
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Correção',
+        'É possível solicitar a correção de dados incompletos, inexatos ou desatualizados.'
+    )"
+>
+
+<strong>
+    ✎ Correção
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Eliminação',
+        'Em hipóteses previstas na LGPD, pode ser possível solicitar a eliminação de dados tratados com base no consentimento.'
+    )"
+>
+
+<strong>
+    ⌫ Eliminação
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Informação',
+        'O titular pode obter informações sobre entidades com as quais os dados foram compartilhados, nos termos da lei.'
+    )"
+>
+
+<strong>
+    ▣ Informação
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Revogação',
+        'Quando o tratamento estiver baseado em consentimento, ele pode ser revogado, observadas as regras aplicáveis.'
+    )"
+>
+
+<strong>
+    ↩ Revogação
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+<div
+    class="right"
+    onclick="direito(
+        'Portabilidade',
+        'A LGPD prevê a portabilidade dos dados a outro fornecedor, observadas regulamentação e condições aplicáveis.'
+    )"
+>
+
+<strong>
+    ⇄ Portabilidade
+</strong>
+
+<small>
+    Clique para saber mais
+</small>
+
+</div>
+
+
+</div>
+
+
+<div id="direitoResult" class="result"></div>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     SIMULADOR
+========================= -->
+
+<section class="reveal">
+
+<div class="container">
+
+<div class="label">
+    06 — SIMULAÇÃO
+</div>
+
+<h2>
+    Quanto você está compartilhando?
+</h2>
+
+<p class="lead">
+
+    Ative ou desative permissões para visualizar uma
+    representação educativa da quantidade de acessos.
+
+</p>
+
+
+<div class="simulator">
+
+
+<div class="setting">
+
+<div>
+
+📍 Localização
+
+<small>
+Acesso à localização.
+</small>
+
+</div>
+
+<div
+    class="toggle on"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="setting">
+
+<div>
+
+🎤 Microfone
+
+<small>
+Acesso ao microfone.
+</small>
+
+</div>
+
+<div
+    class="toggle"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="setting">
+
+<div>
+
+📷 Câmera
+
+<small>
+Acesso à câmera.
+</small>
+
+</div>
+
+<div
+    class="toggle on"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="setting">
+
+<div>
+
+👥 Contatos
+
+<small>
+Acesso aos contatos.
+</small>
+
+</div>
+
+<div
+    class="toggle"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="setting">
+
+<div>
+
+📊 Personalização
+
+<small>
+Conteúdo personalizado.
+</small>
+
+</div>
+
+<div
+    class="toggle on"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="setting">
+
+<div>
+
+🍪 Cookies
+
+<small>
+Informações de navegação.
+</small>
+
+</div>
+
+<div
+    class="toggle on"
+    onclick="toggle(this)"
+>
+
+<div class="knob"></div>
+
+</div>
+
+</div>
+
+
+<div class="meter">
+
+<div id="meterFill"></div>
+
+</div>
+
+
+<div class="metertext">
+
+<span>
+MENOR
+</span>
+
+<strong id="meterText">
+50%
+</strong>
+
+<span>
+MAIOR
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     QUIZ
+========================= -->
+
+<section id="quiz" class="reveal">
+
+<div class="container">
+
+<div class="label">
+    07 — TESTE SEU CONHECIMENTO
+</div>
+
+<h2>
+    Quiz de privacidade.
+</h2>
+
+<p class="lead">
+
+    Cinco perguntas para testar o que você aprendeu.
+
+</p>
+
+
+<div class="quiz">
+
+
+<div class="quiztop">
+
+<span id="quizCount">
+1 / 5
+</span>
+
+<div class="progress">
+
+<div id="quizprogress"></div>
+
+</div>
+
+<strong id="quizScore">
+0 pts
+</strong>
+
+</div>
+
+
+<div
+    id="question"
+    class="question"
+></div>
+
+
+<div
+    id="answers"
+    class="answers"
+></div>
+
+
+<div
+    id="feedback"
+    class="feedback"
+></div>
+
+
+<button
+    id="next"
+    class="btn dark"
+    style="display:none;margin-top:20px"
+    onclick="nextQuestion()"
+>
+
+Próxima →
+
+</button>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CHECKLIST
+========================= -->
+
+<section id="proteger" class="reveal">
+
+<div class="container">
+
+<div class="label">
+    08 — PROTEJA-SE
+</div>
+
+<h2>
+    Seu checklist digital.
+</h2>
+
+<p class="lead">
+
+    Marque as atitudes que você já pratica.
+
+</p>
+
+
+<div class="checklist">
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Uso senhas fortes e diferentes.
+
+</label>
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Uso autenticação em dois fatores.
+
+</label>
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Evito clicar em links suspeitos.
+
+</label>
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Mantenho aplicativos atualizados.
+
+</label>
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Verifico permissões antes de instalar aplicativos.
+
+</label>
+
+
+<label class="check">
+
+<input
+    type="checkbox"
+    onchange="checklist()"
+>
+
+Evito publicar informações pessoais desnecessárias.
+
+</label>
+
+
+</div>
+
+
+<div class="checkprogress">
+
+<div id="checkfill"></div>
+
+</div>
+
+
+<p
+    id="checktext"
+    style="color:#737b84;margin-top:8px"
+>
+
+0 de 6 concluídos
+
+</p>
+
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FONTES
+========================= -->
+
+<section class="reveal">
+
+<div class="container">
+
+<div class="label">
+    09 — PESQUISE MAIS
+</div>
+
+<h2>
+    Fontes confiáveis.
+</h2>
+
+<p class="lead">
+
+    Consulte fontes oficiais para aprofundar seus conhecimentos.
+
+</p>
+
+
+<div class="sources">
+
+
+<div class="card">
+
+<div class="icon">
+    ANPD
+</div>
+
+<h3>
+    Autoridade Nacional de Proteção de Dados
+</h3>
+
+<p>
+
+Informações oficiais sobre proteção de dados pessoais
+e LGPD.
+
+</p>
+
+<br>
+
+<a
+    href="https://www.gov.br/anpd/pt-br"
+    target="_blank"
+    class="btn dark"
+>
+
+Visitar ANPD ↗
+
+</a>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">
+    LEI
+</div>
+
+<h3>
+    Lei Geral de Proteção de Dados
+</h3>
+
+<p>
+
+Consulte o texto oficial da Lei nº 13.709/2018.
+
+</p>
+
+<br>
+
+<a
+    href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+    target="_blank"
+    class="btn dark"
+>
+
+Ler a LGPD ↗
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+<strong>
+DILEMAS DIGITAIS
+</strong>
+
+<p>
+Privacidade & Dados
+</p>
+
+<p>
+Projeto educacional sobre tecnologia e cidadania digital.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   PARTÍCULAS
+========================= */
+
+const canvas=document.getElementById("particles");
+
+const ctx=canvas.getContext("2d");
+
+let particles=[];
+
+
+function resize(){
+
+    canvas.width=window.innerWidth;
+
+    canvas.height=window.innerHeight;
+
+    particles=[];
+
+    const quantidade=
+        Math.min(
+            120,
+            Math.max(
+                45,
+                Math.floor(window.innerWidth/10)
+            )
+        );
+
+    for(let i=0;i<quantidade;i++){
+
+        particles.push({
+
+            x:Math.random()*canvas.width,
+
+            y:Math.random()*canvas.height,
+
+            r:.3+Math.random()*1.5,
+
+            vx:(Math.random()-.5)*.18,
+
+            vy:(Math.random()-.5)*.18,
+
+            a:.08+Math.random()*.28
+
+        });
+
+    }
+
+}
+
+
+function animate(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(p=>{
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        if(p.x<0)
+            p.x=canvas.width;
+
+        if(p.x>canvas.width)
+            p.x=0;
+
+        if(p.y<0)
+            p.y=canvas.height;
+
+        if(p.y>canvas.height)
+            p.y=0;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.r,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle=
+            `rgba(190,195,202,${p.a})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(animate);
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+resize();
+
+animate();
+
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+const observer=
+new IntersectionObserver(
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("show");
+
+            }
+
+        });
+
+    },
+    {
+        threshold:.1
+    }
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(element=>{
+
+    observer.observe(element);
+
+});
+
+
+/* =========================
+   DILEMA
+========================= */
+
+function dilema(tipo,elemento){
+
+    document
+    .querySelectorAll(".choice")
+    .forEach(
+        x=>x.classList.remove("selected")
+    );
+
+    elemento.classList.add("selected");
+
+    const result=
+        document.getElementById(
+            "dilemaResult"
+        );
+
+    result.classList.add("show");
+
+    if(tipo==="aceitar"){
+
+        result.innerHTML=`
+
+        <strong>Você escolheu aceitar.</strong>
+
+        <br><br>
+
+        Antes de aceitar permissões, é importante verificar
+        quais informações serão tratadas e para qual finalidade.
+        O fato de um aplicativo ser gratuito não significa que
+        todas as permissões sejam necessárias.
+
+        `;
+
+    }
+
+    else{
+
+        result.innerHTML=`
+
+        <strong>Você escolheu recusar.</strong>
+
+        <br><br>
+
+        Dependendo do serviço, algumas funções podem ficar
+        indisponíveis. Ainda assim, analisar o que está sendo
+        solicitado ajuda a tomar uma decisão consciente.
+
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+function tab(id,button){
+
+    document
+    .querySelectorAll(".tab")
+    .forEach(
+        x=>x.classList.remove("active")
+    );
+
+    document
+    .querySelectorAll(".tabcontent")
+    .forEach(
+        x=>x.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+
+}
+
+
+/* =========================
+   DIREITOS
+========================= */
+
+function direito(titulo,texto){
+
+    const result=
+        document.getElementById(
+            "direitoResult"
+        );
+
+    result.classList.add("show");
+
+    result.innerHTML=
+        "<strong>"+
+        titulo+
+        "</strong><br><br>"+
+        texto;
+
+}
+
+
+/* =========================
+   SIMULADOR
+========================= */
+
+function toggle(element){
+
+    element.classList.toggle("on");
+
+    atualizarMedidor();
+
+}
+
+
+function atualizarMedidor(){
+
+    const total=
+        document
+        .querySelectorAll(".toggle.on")
+        .length;
+
+    const porcentagem=
+        Math.round(
+            total/6*100
+        );
+
+    document
+    .getElementById("meterFill")
+    .style.width=
+        porcentagem+"%";
+
+    document
+    .getElementById("meterText")
+    .innerText=
+        porcentagem+"%";
+
+}
+
+
+atualizarMedidor();
+
+
+/* =========================
+   QUIZ
+========================= */
+
+const perguntas=[
+
+{
+
+pergunta:
+"Qual situação representa um dado pessoal?",
+
+respostas:[
+
+"Temperatura de uma cidade",
+
+"CPF ligado a uma pessoa",
+
+"Número aleatório sem relação com ninguém",
+
+"Nome de um planeta"
+
+],
+
+correta:1,
+
+explicacao:
+"Um CPF relacionado a uma pessoa é um exemplo de dado pessoal."
+
+},
+
+
+{
+
+pergunta:
+"O que significa LGPD?",
+
+respostas:[
+
+"Lei Geral de Proteção de Dados Pessoais",
+
+"Lei Geral de Publicidade Digital",
+
+"Lista Geral de Programas Digitais",
+
+"Lei de Governança de Plataformas"
+
+],
+
+correta:0,
+
+explicacao:
+"LGPD significa Lei Geral de Proteção de Dados Pessoais."
+
+},
+
+
+{
+
+pergunta:
+"Quem é o titular dos dados?",
+
+respostas:[
+
+"A pessoa a quem os dados se referem",
+
+"O fabricante do celular",
+
+"O servidor do site",
+
+"Somente o dono do aplicativo"
+
+],
+
+correta:0,
+
+explicacao:
+"Titular é a pessoa natural a quem os dados pessoais se referem."
+
+},
+
+
+{
+
+pergunta:
+"Antes de conceder uma permissão, é útil observar:",
+
+respostas:[
+
+"Apenas o visual do aplicativo",
+
+"Finalidade e necessidade do acesso",
+
+"Somente o número de seguidores",
+
+"A quantidade de anúncios"
+
+],
+
+correta:1,
+
+explicacao:
+"Entender finalidade e necessidade ajuda a avaliar a situação."
+
+},
+
+
+{
+
+pergunta:
+"Qual atitude contribui para a segurança digital?",
+
+respostas:[
+
+"Repetir a mesma senha em tudo",
+
+"Compartilhar códigos de autenticação",
+
+"Ativar autenticação em dois fatores",
+
+"Clicar em links desconhecidos"
+
+],
+
+correta:2,
+
+explicacao:
+"A autenticação em dois fatores adiciona uma camada de proteção."
+
+}
+
+];
+
+
+let perguntaAtual=0;
+
+let pontuacao=0;
+
+let respondeu=false;
+
+
+function carregarQuiz(){
+
+    const q=
+        perguntas[perguntaAtual];
+
+    document
+    .getElementById("quizCount")
+    .innerText=
+        (perguntaAtual+1)+
+        " / "+
+        perguntas.length;
+
+    document
+    .getElementById("quizprogress")
+    .style.width=
+        ((perguntaAtual+1)/
+        perguntas.length*100)+
+        "%";
+
+    document
+    .getElementById("question")
+    .innerText=
+        q.pergunta;
+
+    document
+    .getElementById("feedback")
+    .innerText="";
+
+    document
+    .getElementById("next")
+    .style.display="none";
+
+    respondeu=false;
+
+    const area=
+        document.getElementById(
+            "answers"
+        );
+
+    area.innerHTML="";
+
+    q.respostas.forEach(
+        (texto,index)=>{
+
+            const button=
+                document.createElement(
+                    "button"
+                );
+
+            button.className="answer";
+
+            button.innerText=texto;
+
+            button.onclick=()=>{
+                responder(index,button);
+            };
+
+            area.appendChild(button);
+
+        }
+    );
+
+}
+
+
+function responder(index,button){
+
+    if(respondeu)
+        return;
+
+    respondeu=true;
+
+    const q=
+        perguntas[perguntaAtual];
+
+    document
+    .querySelectorAll(".answer")
+    .forEach(
+        (button,i)=>{
+
+            if(i===q.correta){
+
+                button.classList.add(
+                    "correct"
+                );
+
+            }
+
+        }
+    );
+
+    if(index===q.correta){
+
+        pontuacao++;
+
+        document
+        .getElementById("quizScore")
+        .innerText=
+            pontuacao+" pts";
+
+        document
+        .getElementById("feedback")
+        .innerText=
+            "✓ Correto! "+
+            q.explicacao;
+
+    }
+
+    else{
+
+        button.classList.add("wrong");
+
+        document
+        .getElementById("feedback")
+        .innerText=
+            "✗ Ainda não. "+
+            q.explicacao;
+
+    }
+
+    document
+    .getElementById("next")
+    .style.display="inline-block";
+
+}
+
+
+function nextQuestion(){
+
+    perguntaAtual++;
+
+    if(
+        perguntaAtual>=
+        perguntas.length
+    ){
+
+        document
+        .getElementById("quizCount")
+        .innerText="FINAL";
+
+        document
+        .getElementById("question")
+        .innerText=
+            "Quiz concluído!";
+
+        document
+        .getElementById("answers")
+        .innerHTML=`
+
+        <div class="card">
+
+            <h3>
+                Resultado: ${pontuacao} / ${perguntas.length}
+            </h3>
+
+            <br>
+
+            <p>
+                Continue explorando o site e confira as
+                informações sobre privacidade e segurança digital.
+            </p>
+
+        </div>
+
+        `;
+
+        document
+        .getElementById("feedback")
+        .innerText="";
+
+        document
+        .getElementById("next")
+        .style.display="none";
+
+    }
+
+    else{
+
+        carregarQuiz();
+
+    }
+
+}
+
+
+carregarQuiz();
+
+
+/* =========================
+   CHECKLIST
+========================= */
+
+function checklist(){
+
+    const marcados=
+        document
+        .querySelectorAll(
+            ".check input:checked"
+        )
+        .length;
+
+    const porcentagem=
+        marcados/6*100;
+
+    document
+    .getElementById("checkfill")
+    .style.width=
+        porcentagem+"%";
+
+    document
+    .getElementById("checktext")
+    .innerText=
+        marcados+
+        " de 6 concluídos";
+
+}
+
+</script>
+
 </body>
 </html>
